@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome, {{ name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div class="anthropic-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#141413"/>
+                    <path d="M2 17L12 22L22 17" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">Anthropic</span>
+            </div>
+        </div>
+    </header>
+    <div class="animated-background">
+        <div class="animated-shape shape-1"></div>
+        <div class="animated-shape shape-2"></div>
+        <div class="animated-shape shape-3"></div>
+        <div class="animated-shape shape-4"></div>
+    </div>
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-headline">Anthropic Seller Interview</h1>
+            
+            <form class="name-form" id="nameForm" method="POST" action="/interview">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        class="form-input" 
+                        placeholder="Enter your name"
+                        required
+                        autocomplete="name"
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+

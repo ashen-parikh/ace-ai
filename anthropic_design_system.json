@@ -1,0 +1,460 @@
+{
+  "designSystem": {
+    "name": "Anthropic Design System",
+    "version": "1.0.0",
+    "description": "Design system extracted from Anthropic.com for consistent AI-driven design replication",
+    
+    "brandIdentity": {
+      "philosophy": "AI research and products that put safety at the frontier",
+      "coreValues": [
+        "Safety-first approach",
+        "Human benefit foundation",
+        "Responsible AI development",
+        "Transparency and trust"
+      ],
+      "tone": {
+        "voice": "Professional, trustworthy, forward-thinking, accessible",
+        "communicationStyle": "Clear, informative, balanced between technical and approachable"
+      }
+    },
+
+    "colorSystem": {
+      "palette": {
+        "primary": {
+          "black": "#141413",
+          "description": "Primary text and high-contrast elements"
+        },
+        "neutral": {
+          "background": "#faf9f5",
+          "description": "Primary background color - warm off-white"
+        },
+        "grays": {
+          "midGray": "#b0aea5",
+          "lightGray": "#e8e6dc",
+          "description": "Secondary text and subtle UI elements"
+        },
+        "accent": {
+          "orange": "#d97757",
+          "orangeHover": "#b85c44",
+          "blue": "#6a9bcc",
+          "green": "#788c5d",
+          "description": "Accent colors for CTAs and highlights"
+        }
+      },
+      "semanticColors": {
+        "text": {
+          "primary": "#141413",
+          "secondary": "#b0aea5",
+          "inverse": "#faf9f5"
+        },
+        "background": {
+          "primary": "#faf9f5",
+          "secondary": "#ffffff",
+          "subtle": "#e8e6dc"
+        },
+        "interactive": {
+          "primary": "#d97757",
+          "primaryHover": "#b85c44",
+          "secondary": "#6a9bcc"
+        }
+      },
+      "usage": {
+        "highContrast": "Primary black on light backgrounds for accessibility",
+        "warmNeutrals": "Warm-toned grays and off-whites create approachable, human-centered feel",
+        "accentStrategy": "Orange for primary actions, blue for secondary, green for positive states"
+      }
+    },
+
+    "typography": {
+      "fontFamilies": {
+        "headings": {
+          "primary": "Poppins, Arial, sans-serif",
+          "fallback": "system-ui, -apple-system, sans-serif",
+          "description": "Modern, clean sans-serif for headings and UI elements"
+        },
+        "body": {
+          "primary": "Lora, Georgia, serif",
+          "fallback": "Georgia, serif",
+          "description": "Elegant serif for body text, adds warmth and readability"
+        },
+        "monospace": {
+          "primary": "Monaco, 'Courier New', monospace",
+          "description": "For code snippets and technical content"
+        }
+      },
+      "scale": {
+        "h1": {
+          "size": "48px",
+          "lineHeight": "1.2",
+          "weight": "700",
+          "letterSpacing": "-0.02em",
+          "usage": "Hero headlines, main page titles"
+        },
+        "h2": {
+          "size": "36px",
+          "lineHeight": "1.3",
+          "weight": "700",
+          "letterSpacing": "-0.01em",
+          "usage": "Section headers, major content divisions"
+        },
+        "h3": {
+          "size": "24px",
+          "lineHeight": "1.4",
+          "weight": "600",
+          "usage": "Subsection headers, card titles"
+        },
+        "h4": {
+          "size": "20px",
+          "lineHeight": "1.5",
+          "weight": "600",
+          "usage": "Component titles, smaller headers"
+        },
+        "body": {
+          "size": "16px",
+          "lineHeight": "1.6",
+          "weight": "400",
+          "usage": "Primary body text, paragraphs"
+        },
+        "bodySmall": {
+          "size": "14px",
+          "lineHeight": "1.5",
+          "weight": "400",
+          "usage": "Secondary text, captions, metadata"
+        },
+        "label": {
+          "size": "12px",
+          "lineHeight": "1.4",
+          "weight": "500",
+          "textTransform": "uppercase",
+          "letterSpacing": "0.05em",
+          "usage": "Form labels, navigation items, tags"
+        }
+      },
+      "hierarchy": {
+        "principle": "Clear visual hierarchy through size, weight, and spacing",
+        "contrast": "Strong contrast between headings (sans-serif) and body (serif) creates distinction"
+      }
+    },
+
+    "spacing": {
+      "baseUnit": "4px",
+      "scale": {
+        "xs": "4px",
+        "sm": "8px",
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "2xl": "48px",
+        "3xl": "64px",
+        "4xl": "96px"
+      },
+      "usage": {
+        "componentPadding": "20px",
+        "sectionSpacing": "64px",
+        "contentMaxWidth": "1200px",
+        "contentPadding": "20px"
+      }
+    },
+
+    "layout": {
+      "grid": {
+        "columns": 12,
+        "gutterWidth": "16px",
+        "maxWidth": "1200px",
+        "breakpoints": {
+          "mobile": "320px",
+          "tablet": "768px",
+          "desktop": "1024px",
+          "wide": "1440px"
+        }
+      },
+      "containers": {
+        "fullWidth": "100vw",
+        "content": "1200px",
+        "narrow": "800px",
+        "wide": "1400px"
+      },
+      "patterns": {
+        "centeredContent": "Max-width container with auto margins",
+        "sectionSpacing": "Vertical rhythm with consistent spacing between sections",
+        "responsive": "Mobile-first approach with progressive enhancement"
+      }
+    },
+
+    "components": {
+      "button": {
+        "styles": {
+          "primary": {
+            "background": "#d97757",
+            "color": "#ffffff",
+            "padding": "12px 24px",
+            "borderRadius": "4px",
+            "fontWeight": "500",
+            "fontSize": "16px",
+            "border": "none",
+            "cursor": "pointer",
+            "transition": "all 0.2s ease"
+          },
+          "primaryHover": {
+            "background": "#b85c44",
+            "transform": "translateY(-1px)",
+            "boxShadow": "0 4px 8px rgba(217, 119, 87, 0.3)"
+          },
+          "secondary": {
+            "background": "transparent",
+            "color": "#141413",
+            "border": "1px solid #141413",
+            "padding": "12px 24px",
+            "borderRadius": "4px"
+          },
+          "text": {
+            "background": "transparent",
+            "color": "#d97757",
+            "padding": "8px 16px",
+            "textDecoration": "underline"
+          }
+        },
+        "sizes": {
+          "small": "10px 16px",
+          "medium": "12px 24px",
+          "large": "16px 32px"
+        }
+      },
+      "card": {
+        "styles": {
+          "default": {
+            "background": "#ffffff",
+            "borderRadius": "8px",
+            "padding": "24px",
+            "boxShadow": "0 2px 8px rgba(0, 0, 0, 0.08)",
+            "border": "1px solid #e8e6dc"
+          },
+          "hover": {
+            "boxShadow": "0 4px 16px rgba(0, 0, 0, 0.12)",
+            "transform": "translateY(-2px)",
+            "transition": "all 0.3s ease"
+          }
+        }
+      },
+      "navigation": {
+        "styles": {
+          "header": {
+            "background": "#faf9f5",
+            "padding": "16px 20px",
+            "borderBottom": "1px solid #e8e6dc",
+            "position": "sticky",
+            "top": "0",
+            "zIndex": "100"
+          },
+          "links": {
+            "color": "#141413",
+            "fontSize": "14px",
+            "fontWeight": "500",
+            "padding": "8px 16px",
+            "textDecoration": "none",
+            "hover": {
+              "color": "#d97757"
+            }
+          }
+        }
+      },
+      "hero": {
+        "styles": {
+          "container": {
+            "padding": "96px 20px",
+            "textAlign": "center",
+            "maxWidth": "800px",
+            "margin": "0 auto"
+          },
+          "headline": {
+            "fontSize": "48px",
+            "fontWeight": "700",
+            "lineHeight": "1.2",
+            "marginBottom": "24px",
+            "color": "#141413"
+          },
+          "subheadline": {
+            "fontSize": "20px",
+            "lineHeight": "1.6",
+            "color": "#b0aea5",
+            "marginBottom": "32px"
+          }
+        }
+      },
+      "section": {
+        "styles": {
+          "default": {
+            "padding": "64px 20px",
+            "maxWidth": "1200px",
+            "margin": "0 auto"
+          },
+          "alternating": {
+            "background": "#ffffff",
+            "padding": "64px 20px"
+          }
+        }
+      },
+      "footer": {
+        "styles": {
+          "container": {
+            "background": "#141413",
+            "color": "#faf9f5",
+            "padding": "64px 20px",
+            "borderTop": "1px solid #e8e6dc"
+          },
+          "links": {
+            "color": "#b0aea5",
+            "textDecoration": "none",
+            "hover": {
+              "color": "#faf9f5"
+            }
+          }
+        }
+      }
+    },
+
+    "visualPatterns": {
+      "imagery": {
+        "style": "Clean, professional, human-centered",
+        "treatment": "Subtle, not overwhelming",
+        "placement": "Supporting content, not dominant"
+      },
+      "icons": {
+        "style": "Minimal, line-based",
+        "strokeWidth": "1.5px",
+        "color": "#141413"
+      },
+      "dividers": {
+        "style": "Subtle horizontal lines",
+        "color": "#e8e6dc",
+        "thickness": "1px"
+      },
+      "shadows": {
+        "subtle": "0 2px 8px rgba(0, 0, 0, 0.08)",
+        "medium": "0 4px 16px rgba(0, 0, 0, 0.12)",
+        "elevated": "0 8px 24px rgba(0, 0, 0, 0.16)"
+      }
+    },
+
+    "interactions": {
+      "transitions": {
+        "duration": "0.2s - 0.3s",
+        "easing": "ease",
+        "properties": ["background-color", "color", "transform", "box-shadow"]
+      },
+      "hover": {
+        "button": "Slight lift (translateY(-1px)) with shadow increase",
+        "link": "Color change to accent orange",
+        "card": "Elevation with increased shadow"
+      },
+      "focus": {
+        "outline": "2px solid #d97757",
+        "outlineOffset": "2px"
+      }
+    },
+
+    "contentPatterns": {
+      "headlines": {
+        "style": "Bold, declarative statements",
+        "length": "Short to medium (3-8 words)",
+        "tone": "Confident, clear, benefit-focused"
+      },
+      "bodyText": {
+        "style": "Warm, approachable, informative",
+        "paragraphSpacing": "24px",
+        "maxLineLength": "65-75 characters"
+      },
+      "cta": {
+        "placement": "Strategic, not overwhelming",
+        "language": "Action-oriented, clear value proposition",
+        "frequency": "1-2 per section maximum"
+      },
+      "hierarchy": {
+        "principle": "Information architecture supports scanning",
+        "structure": "Clear sections with descriptive headers",
+        "progressiveDisclosure": "Details available but not overwhelming"
+      }
+    },
+
+    "accessibility": {
+      "contrast": {
+        "minimum": "WCAG AA compliant",
+        "textOnBackground": "4.5:1 minimum",
+        "largeText": "3:1 minimum"
+      },
+      "focus": {
+        "visible": "Always visible focus indicators",
+        "keyboard": "Full keyboard navigation support"
+      },
+      "semantics": {
+        "html": "Semantic HTML elements",
+        "aria": "ARIA labels where appropriate",
+        "headings": "Proper heading hierarchy (h1-h6)"
+      }
+    },
+
+    "responsiveDesign": {
+      "approach": "Mobile-first",
+      "breakpoints": {
+        "mobile": {
+          "max": "767px",
+          "characteristics": "Single column, stacked navigation, full-width content"
+        },
+        "tablet": {
+          "min": "768px",
+          "max": "1023px",
+          "characteristics": "Two-column layouts, expanded navigation"
+        },
+        "desktop": {
+          "min": "1024px",
+          "characteristics": "Multi-column layouts, full navigation, optimized spacing"
+        }
+      },
+      "typography": {
+        "mobile": {
+          "h1": "32px",
+          "h2": "28px",
+          "body": "16px"
+        },
+        "desktop": {
+          "h1": "48px",
+          "h2": "36px",
+          "body": "16px"
+        }
+      }
+    },
+
+    "designPrinciples": {
+      "clarity": "Information should be immediately understandable",
+      "trust": "Visual design reinforces credibility and safety",
+      "accessibility": "Design works for everyone",
+      "consistency": "Reusable patterns create cohesive experience",
+      "purpose": "Every element serves a clear function",
+      "warmth": "Human-centered design with approachable aesthetics"
+    },
+
+    "usageGuidelines": {
+      "color": {
+        "primary": "Use black (#141413) for primary text and high-contrast elements",
+        "background": "Warm off-white (#faf9f5) creates approachable feel",
+        "accent": "Orange for primary actions, use sparingly for maximum impact"
+      },
+      "typography": {
+        "headings": "Use Poppins for all headings and UI elements",
+        "body": "Use Lora serif for body text to add warmth and readability",
+        "hierarchy": "Maintain clear size and weight hierarchy"
+      },
+      "spacing": {
+        "consistency": "Use 4px base unit for all spacing",
+        "breathingRoom": "Generous spacing creates premium feel",
+        "sections": "64px vertical spacing between major sections"
+      },
+      "components": {
+        "reusability": "Use consistent component patterns throughout",
+        "variations": "Limit variations to maintain consistency",
+        "states": "Always design hover, focus, and active states"
+      }
+    }
+  }
+}
+

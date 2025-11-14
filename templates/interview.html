@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview - {{ name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-content">
+            <div class="anthropic-logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#141413"/>
+                    <path d="M2 17L12 22L22 17" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#141413" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="logo-text">Anthropic</span>
+            </div>
+        </div>
+    </header>
+    <div class="container interview-container">
+        <div class="interview-header">
+            <h1 class="interview-title">Anthropic Seller Interview</h1>
+            <p class="interview-subtitle">Welcome, {{ name }}</p>
+        </div>
+        
+        <!-- Interview stages hidden from interviewee - kept for internal tracking -->
+        <div class="interview-stages" id="interviewStages" style="display: none;">
+            <div class="stage" data-stage="1">
+                <div class="stage-number">1</div>
+                <div class="stage-label">Research Objectives</div>
+            </div>
+            <div class="stage" data-stage="2">
+                <div class="stage-number">2</div>
+                <div class="stage-label">Draft Email</div>
+            </div>
+            <div class="stage" data-stage="3">
+                <div class="stage-number">3</div>
+                <div class="stage-label">Show Weaknesses</div>
+            </div>
+            <div class="stage" data-stage="4">
+                <div class="stage-number">4</div>
+                <div class="stage-label">Product Manager</div>
+            </div>
+            <div class="stage" data-stage="5">
+                <div class="stage-number">5</div>
+                <div class="stage-label">Salesforce CRM</div>
+            </div>
+            <div class="stage" data-stage="6">
+                <div class="stage-number">6</div>
+                <div class="stage-label">Update Email</div>
+            </div>
+            <div class="stage" data-stage="7">
+                <div class="stage-number">7</div>
+                <div class="stage-label">Vijay Follow-up</div>
+            </div>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added here -->
+            </div>
+            
+            <div class="chat-input-container">
+                <form id="chatForm" class="chat-form">
+                    <textarea 
+                        id="messageInput" 
+                        class="chat-input" 
+                        placeholder="Type your response here..."
+                        rows="3"
+                        required
+                    ></textarea>
+                    <button type="submit" class="btn btn-primary chat-send-btn">
+                        Send
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        const interviewStages = document.getElementById('interviewStages');
+        let initialized = false;
+        let currentStage = 1;
+
+        // Initialize chat when page loads
+        window.addEventListener('DOMContentLoaded', async () => {
+            if (!initialized) {
+                await initializeChat();
+            }
+        });
+
+        function updateStage(stage) {
+            currentStage = stage;
+            const stages = interviewStages.querySelectorAll('.stage');
+            stages.forEach((s, index) => {
+                const stageNum = index + 1;
+                if (stageNum < stage) {
+                    s.classList.add('completed');
+                    s.classList.remove('active');
+                } else if (stageNum === stage) {
+                    s.classList.add('active');
+                    s.classList.remove('completed');
+                } else {
+                    s.classList.remove('active', 'completed');
+                }
+            });
+        }
+
+        async function initializeChat() {
+            try {
+                const response = await fetch('/api/chat/init', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                if (data.message) {
+                    addMessage(data.message, 'assistant');
+                    initialized = true;
+                    updateStage(1); // Start at stage 1
+                }
+            } catch (error) {
+                console.error('Error initializing chat:', error);
+                addMessage('Error initializing interview. Please refresh the page.', 'error');
+            }
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const message = messageInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            messageInput.value = '';
+            
+            // Disable input while waiting for response
+            messageInput.disabled = true;
+            chatForm.querySelector('button').disabled = true;
+            
+            // Show loading indicator
+            const loadingId = addMessage('Thinking...', 'assistant', true);
+            
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                const data = await response.json();
+                
+                // Remove loading message
+                const loadingMsg = document.getElementById(loadingId);
+                if (loadingMsg) {
+                    loadingMsg.remove();
+                }
+                
+                if (data.message) {
+                    addMessage(data.message, 'assistant');
+                    // Detect stage transitions based on message content
+                    const messageLower = data.message.toLowerCase();
+                    if (messageLower.includes('draft') && messageLower.includes('email') && !messageLower.includes('update')) {
+                        updateStage(2);
+                    } else if (messageLower.includes('missing') || messageLower.includes('weakness') || messageLower.includes('where would you get')) {
+                        updateStage(3);
+                    } else if (messageLower.includes('product manager') || messageLower.includes('pm at anthropic')) {
+                        updateStage(4);
+                    } else if (messageLower.includes('salesforce') || messageLower.includes('crm') || messageLower.includes('check your')) {
+                        updateStage(5);
+                    } else if (messageLower.includes('update') && messageLower.includes('email')) {
+                        updateStage(6);
+                    } else if (messageLower.includes('vijay') && (messageLower.includes('replies') || messageLower.includes('responds') || messageLower.includes('from: vijay') || messageLower.includes('follow-up') || messageLower.includes('vp'))) {
+                        updateStage(7);
+                    }
+                } else if (data.error) {
+                    addMessage('Error: ' + data.error, 'error');
+                }
+            } catch (error) {
+                // Remove loading message
+                const loadingMsg = document.getElementById(loadingId);
+                if (loadingMsg) {
+                    loadingMsg.remove();
+                }
+                addMessage('Error sending message. Please try again.', 'error');
+            } finally {
+                // Re-enable input
+                messageInput.disabled = false;
+                chatForm.querySelector('button').disabled = false;
+                messageInput.focus();
+            }
+        });
+
+        function addMessage(text, role, isLoading = false) {
+            const messageDiv = document.createElement('div');
+            const messageId = 'msg-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            messageDiv.id = messageId;
+            messageDiv.className = `chat-message chat-message-${role}`;
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'chat-message-content';
+            
+            // Format text with line breaks
+            const formattedText = text.replace(/\n/g, '<br>');
+            messageContent.innerHTML = formattedText;
+            
+            messageDiv.appendChild(messageContent);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            return messageId;
+        }
+    </script>
+</body>
+</html>
