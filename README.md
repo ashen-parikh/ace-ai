@@ -1,10 +1,10 @@
-# Ace AI Demo
+# Ace AI
 
-A new project directory for Ace AI.
+Current interview techniques are a bad predictor of on-job performance. Ace eliminates interviewer bias and mismatch by simulating your company for you.
 
-## Getting Started
+## About
 
-This is a fresh project structure. Start building your application here.
+Ace AI is an interview simulation platform that helps companies assess candidates through realistic, job-relevant scenarios. The platform simulates real-world situations candidates would face on the job, providing a more accurate assessment of their capabilities.
 
 ## Project Structure
 
@@ -12,9 +12,16 @@ This is a fresh project structure. Start building your application here.
 ace_ai_demo/
 ├── README.md
 ├── requirements.txt
-├── .env.example
-└── src/
-    └── main.py
+├── anthropic_design_system.json
+├── src/
+│   ├── main.py
+│   └── agent.py
+├── templates/
+│   ├── index.html
+│   ├── welcome.html
+│   └── interview.html
+└── static/
+    └── style.css
 ```
 
 ## Installation
@@ -30,19 +37,28 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-3. Copy `.env.example` to `.env` and fill in your configuration:
+3. Set up environment variables (optional):
 ```bash
-cp .env.example .env
+# Create .env file with your Grok API key
+GROK_API_KEY=your_api_key_here
 ```
 
 ## Usage
 
 Run the application:
 ```bash
-python src/main.py
+python3 src/main.py
 ```
+
+The application will start on `http://localhost:8080`
+
+## Features
+
+- Interactive interview simulation
+- Real-time chat interface
+- Step-by-step assessment flow
+- Anthropic design system integration
 
 ## License
 
 MIT
-
