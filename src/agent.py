@@ -8,7 +8,7 @@ import requests
 from typing import List, Dict, Optional
 
 # Grok API configuration
-GROK_API_KEY = os.getenv('GROK_API_KEY', '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')
+GROK_API_KEY = os.getenv('GROK_API_KEY')
 GROK_API_URL = 'https://api.x.ai/v1/chat/completions'
 
 SYSTEM_PROMPT = """Role & context
