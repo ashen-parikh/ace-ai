@@ -96,11 +96,19 @@ def chat():
         return jsonify({'error': 'Message is required'}), 400
     
     agent = agents[session_id]
-    response = agent.get_response(user_message)
+    
+    # Get response from agent - it will automatically delegate to Solution Architect if needed
+    agent_response = agent.get_response(user_message)
+    
+    # Check if we're currently using Solution Architect to set the speaker
+    speaker = None
+    if agent.using_solution_architect:
+        speaker = 'Alex Chen (Solution Architect)'
     
     return jsonify({
-        'message': response,
-        'role': 'assistant'
+        'message': agent_response,
+        'role': 'assistant',
+        'speaker': speaker
     })
 
 

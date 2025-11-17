@@ -500,6 +500,16 @@ body {
     word-wrap: break-word;
 }
 
+.message-speaker {
+    font-family: var(--font-headings);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-gray-mid);
+    margin-bottom: var(--spacing-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
 .chat-message-user .chat-message-content {
     background: var(--color-accent-orange);
     color: #ffffff;

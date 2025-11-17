@@ -36,26 +36,22 @@
             </div>
             <div class="stage" data-stage="2">
                 <div class="stage-number">2</div>
-                <div class="stage-label">Draft Email</div>
+                <div class="stage-label">Show Weaknesses</div>
             </div>
             <div class="stage" data-stage="3">
                 <div class="stage-number">3</div>
-                <div class="stage-label">Show Weaknesses</div>
+                <div class="stage-label">Solution Architect</div>
             </div>
             <div class="stage" data-stage="4">
                 <div class="stage-number">4</div>
-                <div class="stage-label">Product Manager</div>
+                <div class="stage-label">Draft Email</div>
             </div>
             <div class="stage" data-stage="5">
                 <div class="stage-number">5</div>
-                <div class="stage-label">Salesforce CRM</div>
+                <div class="stage-label">Update Email</div>
             </div>
             <div class="stage" data-stage="6">
                 <div class="stage-number">6</div>
-                <div class="stage-label">Update Email</div>
-            </div>
-            <div class="stage" data-stage="7">
-                <div class="stage-number">7</div>
                 <div class="stage-label">Vijay Follow-up</div>
             </div>
         </div>
@@ -89,6 +85,7 @@
         const interviewStages = document.getElementById('interviewStages');
         let initialized = false;
         let currentStage = 1;
+        let usingSolutionArchitect = false;
 
         // Initialize chat when page loads
         window.addEventListener('DOMContentLoaded', async () => {
@@ -158,7 +155,10 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: message })
+                    body: JSON.stringify({ 
+                        message: message,
+                        use_solution_architect: usingSolutionArchitect
+                    })
                 });
                 
                 const data = await response.json();
@@ -170,21 +170,34 @@
                 }
                 
                 if (data.message) {
-                    addMessage(data.message, 'assistant');
-                    // Detect stage transitions based on message content
-                    const messageLower = data.message.toLowerCase();
-                    if (messageLower.includes('draft') && messageLower.includes('email') && !messageLower.includes('update')) {
-                        updateStage(2);
-                    } else if (messageLower.includes('missing') || messageLower.includes('weakness') || messageLower.includes('where would you get')) {
-                        updateStage(3);
-                    } else if (messageLower.includes('product manager') || messageLower.includes('pm at anthropic')) {
-                        updateStage(4);
-                    } else if (messageLower.includes('salesforce') || messageLower.includes('crm') || messageLower.includes('check your')) {
-                        updateStage(5);
-                    } else if (messageLower.includes('update') && messageLower.includes('email')) {
-                        updateStage(6);
-                    } else if (messageLower.includes('vijay') && (messageLower.includes('replies') || messageLower.includes('responds') || messageLower.includes('from: vijay') || messageLower.includes('follow-up') || messageLower.includes('vp'))) {
-                        updateStage(7);
+                    // Check if this is from Solution Architect
+                    if (data.speaker === 'solution_architect') {
+                        usingSolutionArchitect = true;
+                        addMessage(data.message, 'assistant', false, 'Alex Chen (Solution Architect)');
+                    } else {
+                        // Check if agent is connecting to Solution Architect
+                        const messageLower = data.message.toLowerCase();
+                        if (messageLower.includes('solution architect') || messageLower.includes('alex chen') || (messageLower.includes('connected') && messageLower.includes('architect'))) {
+                            usingSolutionArchitect = true;
+                            addMessage(data.message, 'assistant');
+                        } else {
+                            usingSolutionArchitect = false;
+                            addMessage(data.message, 'assistant');
+                        }
+                    
+                        // Detect stage transitions based on message content
+                        // New order: 1. Research Objectives, 2. Show Weaknesses, 3. Solution Architect, 4. Draft Email, 5. Update Email, 6. Vijay Follow-up
+                        if (messageLower.includes('missing') || messageLower.includes('weakness') || messageLower.includes('where would you get') || messageLower.includes('what information') || messageLower.includes('what would be helpful')) {
+                            updateStage(2);
+                        } else if (messageLower.includes('solution architect') || messageLower.includes('alex chen')) {
+                            updateStage(3);
+                        } else if (messageLower.includes('draft') && messageLower.includes('email') && !messageLower.includes('update')) {
+                            updateStage(4);
+                        } else if (messageLower.includes('update') && messageLower.includes('email')) {
+                            updateStage(5);
+                        } else if (messageLower.includes('vijay') && (messageLower.includes('replies') || messageLower.includes('responds') || messageLower.includes('from: vijay') || messageLower.includes('follow-up') || messageLower.includes('vp'))) {
+                            updateStage(6);
+                        }
                     }
                 } else if (data.error) {
                     addMessage('Error: ' + data.error, 'error');
@@ -204,7 +217,7 @@
             }
         });
 
-        function addMessage(text, role, isLoading = false) {
+        function addMessage(text, role, isLoading = false, speaker = null) {
             const messageDiv = document.createElement('div');
             const messageId = 'msg-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
             messageDiv.id = messageId;
@@ -213,9 +226,19 @@
             const messageContent = document.createElement('div');
             messageContent.className = 'chat-message-content';
             
+            // Add speaker label if provided
+            if (speaker) {
+                const speakerLabel = document.createElement('div');
+                speakerLabel.className = 'message-speaker';
+                speakerLabel.textContent = speaker;
+                messageContent.appendChild(speakerLabel);
+            }
+            
+            const textContent = document.createElement('div');
             // Format text with line breaks
             const formattedText = text.replace(/\n/g, '<br>');
-            messageContent.innerHTML = formattedText;
+            textContent.innerHTML = formattedText;
+            messageContent.appendChild(textContent);
             
             messageDiv.appendChild(messageContent);
             chatMessages.appendChild(messageDiv);
