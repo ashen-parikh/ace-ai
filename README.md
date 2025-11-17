@@ -4,7 +4,7 @@ Current interview techniques are a bad predictor of on-job performance. Ace elim
 
 ## About
 
-Ace AI is an interview simulation platform that helps companies assess candidates through realistic, job-relevant scenarios. The platform simulates real-world situations candidates would face on the job, providing a more accurate assessment of their capabilities.
+Built using Cursor and Claude, Ace AI is an interview simulation platform that helps companies assess candidates through realistic, job-relevant scenarios. The platform simulates real-world situations candidates would face on the job, providing a more accurate assessment of their capabilities.
 
 ## Project Structure
 
